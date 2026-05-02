@@ -6,30 +6,23 @@
 <title>บัญชีดอก</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-  :root{
-    --bg:#f5f2eb;--surface:#fff;--border:#ddd9ce;--text:#1a1814;--muted:#8a8070;
-    --green:#1a7a3c;--green-l:#edf7f1;--red:#c8390a;--red-l:#fef0eb;
-    --blue:#1a4a7a;--blue-l:#ebf2fe;--warn:#b07820;--warn-l:#fdf8ec;
-    --tag:#2b2620;
-  }
+  :root{--bg:#f5f2eb;--surface:#fff;--border:#ddd9ce;--text:#1a1814;--muted:#8a8070;--green:#1a7a3c;--green-l:#edf7f1;--red:#c8390a;--red-l:#fef0eb;--blue:#1a4a7a;--blue-l:#ebf2fe;--warn:#b07820;--warn-l:#fdf8ec;--tag:#2b2620;}
   *{box-sizing:border-box;margin:0;padding:0}
   body{background:var(--bg);color:var(--text);font-family:'Sarabun',sans-serif;min-height:100vh;padding-bottom:80px}
-  /* NAV */
   .nav{position:sticky;top:0;z-index:100;background:var(--tag);display:flex}
   .nav-btn{flex:1;padding:14px 4px;border:none;background:transparent;color:#6a6058;font-family:'Sarabun',sans-serif;font-size:13px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
   .nav-btn.active{color:#f5f2eb;border-bottom-color:#7fff6e}
-  /* PAGES */
+  .live-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#7fff6e;margin-left:5px;vertical-align:middle;animation:pulse 1.5s ease-in-out infinite}
+  .live-dot.off{background:#6a6058;animation:none}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
   .page{display:none;padding:18px 16px}
   .page.active{display:block}
   .pg-title{font-size:20px;font-weight:700;margin-bottom:2px}
   .pg-sub{font-size:12px;color:var(--muted);margin-bottom:16px}
-  /* TABS */
   .ttabs{display:flex;gap:4px;background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:3px;margin-bottom:12px}
   .ttab{flex:1;padding:7px 4px;border-radius:8px;border:none;background:transparent;color:var(--muted);font-family:'Sarabun',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s}
   .ttab.active{background:var(--bg);color:var(--text);border:1px solid var(--border)}
-  /* CARD */
-  .card{background:var(--surface);border:1.5px solid var(--border);border-radius:13px;padding:13px 14px;margin-bottom:8px;animation:fi .18s ease}
-  @keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .card{background:var(--surface);border:1.5px solid var(--border);border-radius:13px;padding:13px 14px;margin-bottom:8px}
   .card.receive{border-left:4px solid var(--green)}
   .card.paid{border-left:4px solid var(--border);opacity:.6}
   .card.dok20{border-left:4px solid var(--red)}
@@ -40,40 +33,23 @@
   .card-sub{font-size:12px;color:var(--muted);margin-top:2px}
   .card-amt{font-size:14px;font-weight:700;text-align:right}
   .card-date{font-size:11px;color:var(--muted);margin-top:2px;text-align:right}
-  /* BADGE */
   .badge{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:700;display:inline-block;margin-left:4px}
-  .b-receive{background:var(--green-l);color:var(--green)}
-  .b-paid{background:#f0ece4;color:var(--muted)}
-  .b-interest{background:var(--warn-l);color:var(--warn)}
-  .b-dok20{background:var(--red-l);color:var(--red)}
-  .b-dokki{background:var(--blue-l);color:var(--blue)}
-  /* CHIPS */
+  .b-receive{background:var(--green-l);color:var(--green)}.b-paid{background:#f0ece4;color:var(--muted)}.b-interest{background:var(--warn-l);color:var(--warn)}.b-dok20{background:var(--red-l);color:var(--red)}.b-dokki{background:var(--blue-l);color:var(--blue)}
   .chips{display:flex;gap:4px;flex-wrap:wrap;margin:6px 0}
   .chip{font-family:'JetBrains Mono',monospace;font-size:11px;padding:2px 8px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--muted)}
-  .chip.red{color:var(--red);border-color:#f0b8a0;background:var(--red-l)}
-  .chip.blue{color:var(--blue);border-color:#a0b8d8;background:var(--blue-l)}
-  /* RESULT GRID */
-  .rgrid{display:grid;gap:5px;margin-top:8px}
-  .g3{grid-template-columns:1fr 1fr 1fr}
-  .g4{grid-template-columns:1fr 1fr 1fr 1fr}
+  .chip.red{color:var(--red);border-color:#f0b8a0;background:var(--red-l)}.chip.blue{color:var(--blue);border-color:#a0b8d8;background:var(--blue-l)}
+  .rgrid{display:grid;gap:5px;margin-top:8px}.g3{grid-template-columns:1fr 1fr 1fr}.g4{grid-template-columns:1fr 1fr 1fr 1fr}
   .rbox{background:var(--bg);border-radius:8px;padding:8px 5px;text-align:center}
   .rlabel{font-size:10px;color:var(--muted);margin-bottom:2px;text-transform:uppercase}
   .rval{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}
   .c-green{color:var(--green)}.c-red{color:var(--red)}.c-blue{color:var(--blue)}.c-muted{color:var(--muted)}
-  /* SUMMARY */
   .sbox{background:var(--tag);border-radius:13px;padding:15px;margin-top:8px;color:#f5f2eb}
   .srow{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #2f2b25;font-size:13px}
   .srow:last-child{border-bottom:none}
-  .slabel{color:#a09888}
-  .sval{font-family:'JetBrains Mono',monospace;font-weight:700}
-  .sval.big{font-size:17px;color:#7fff6e}
-  .sval.warn{color:#ffb347}
-  .sval.blue{color:#5bc8ff}
-  .sval.red{color:#ff8888}
-  /* SECTION */
+  .slabel{color:#a09888}.sval{font-family:'JetBrains Mono',monospace;font-weight:700}
+  .sval.big{font-size:17px;color:#7fff6e}.sval.warn{color:#ffb347}.sval.blue{color:#5bc8ff}.sval.red{color:#ff8888}
   .sec{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px;display:flex;align-items:center;gap:8px}
   .sec::after{content:'';flex:1;height:1px;background:var(--border)}
-  /* FORM */
   .fbox{background:var(--surface);border:1.5px solid var(--border);border-radius:13px;padding:15px;margin-bottom:12px}
   .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
   .full{grid-column:1/-1}
@@ -83,41 +59,77 @@
   .btn{width:100%;border:none;border-radius:9px;padding:12px;font-family:'Sarabun',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:opacity .15s,transform .1s;color:#fff}
   .btn:active{transform:scale(.98)}.btn:hover{opacity:.88}
   .btn-green{background:var(--green)}.btn-red{background:var(--red)}.btn-blue{background:var(--blue)}
-  .btn-del{background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;padding:2px 6px;border-radius:4px;transition:all .15s}
+  .btn-del{background:none;border:none;color:var(--muted);font-size:11px;cursor:pointer;padding:2px 6px;border-radius:4px}
   .btn-del:hover{color:var(--red);background:var(--red-l)}
-  /* CHECKBOX */
   .cbrow{display:flex;align-items:center;gap:10px;cursor:pointer}
   .cb{width:21px;height:21px;border:2px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;transition:all .15s}
   .cb.on{background:var(--green);border-color:var(--green);color:#fff}
-  /* MISC */
   .empty{text-align:center;color:var(--muted);padding:30px 0;font-size:13px}
   .alt-note{font-size:11px;color:var(--warn);background:var(--warn-l);border:1px solid #e8d898;border-radius:5px;padding:3px 8px;margin-top:4px;display:inline-block}
   .fbar{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);background:var(--border);border-radius:7px;padding:9px 12px;line-height:1.9;margin-bottom:13px}
-  .fbar b{color:var(--red)}
-  .fbar .blu{color:var(--blue)}
+  .topbar{font-size:12px;text-align:center;padding:7px;display:none;font-weight:600}
+  .topbar.show{display:block}
+  .topbar.sync{background:#1a4a7a;color:#fff}
+  .topbar.ok{background:var(--green);color:#fff}
+  .topbar.err{background:var(--red);color:#fff}
+  .topbar.live{background:#1a7a3c;color:#fff}
+  .setup-box{background:var(--surface);border:2px dashed var(--border);border-radius:13px;padding:22px;margin-top:10px;text-align:center}
+  .setup-title{font-size:16px;font-weight:700;margin-bottom:8px}
+  .setup-sub{font-size:13px;color:var(--muted);margin-bottom:14px;line-height:1.7}
+  .loading{text-align:center;color:var(--muted);padding:40px 0;font-size:13px}
+  .url-row{display:flex;align-items:center;gap:6px;margin-bottom:8px;font-size:11px;color:var(--muted);background:var(--bg);border-radius:7px;padding:7px 10px}
+  .url-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+  .url-dot.off{background:var(--muted)}
+  .live-info{font-size:11px;color:var(--muted);text-align:center;padding:6px;background:var(--bg);border-radius:6px;margin-bottom:10px}
+  .live-info b{color:var(--green)}
+  @keyframes flash{0%{background:#7fff6e44}100%{background:transparent}}
+  .flash{animation:flash 1s ease}
 </style>
 </head>
 <body>
-
+<div id="topbar" class="topbar"></div>
 <div class="nav">
-  <button class="nav-btn active" onclick="goPage('records')">📋 บัญชี</button>
+  <button class="nav-btn active" onclick="goPage('records')">📋 บัญชี<span class="live-dot off" id="dot-records"></span></button>
   <button class="nav-btn" onclick="goPage('calc')">🧮 คิดดอก</button>
   <button class="nav-btn" onclick="goPage('add')">➕ เพิ่ม</button>
+  <button class="nav-btn" onclick="goPage('setup')">⚙️</button>
 </div>
 
-<!-- RECORDS -->
+<div class="page" id="page-setup">
+  <div class="pg-title">ตั้งค่า</div>
+  <div class="pg-sub">เชื่อมต่อ Google Sheets</div>
+  <div id="url-status"></div>
+  <div class="setup-box">
+    <div class="setup-title">🔗 Google Apps Script URL</div>
+    <div class="setup-sub">วาง Web App URL ที่ได้จาก<br>Google Apps Script → Deploy</div>
+    <div style="margin-bottom:10px"><input type="text" id="setup-url" placeholder="https://script.google.com/macros/s/..."></div>
+    <button class="btn btn-green" onclick="saveSetup()">บันทึกและเชื่อมต่อ</button>
+  </div>
+  <div class="setup-box" style="margin-top:14px">
+    <div class="setup-title">⏱ ความถี่ในการ sync</div>
+    <div class="setup-sub">เลือกระยะเวลาในการดึงข้อมูลใหม่<br>(เร็วเปลือง quota Apps Script)</div>
+    <select id="poll-interval" onchange="setPollInterval()">
+      <option value="2000">2 วินาที (เร็วมาก)</option>
+      <option value="3000" selected>3 วินาที (แนะนำ)</option>
+      <option value="5000">5 วินาที</option>
+      <option value="10000">10 วินาที</option>
+      <option value="0">ปิด (sync ตอนเปิดเท่านั้น)</option>
+    </select>
+  </div>
+</div>
+
 <div class="page active" id="page-records">
   <div class="pg-title">บัญชีเงิน</div>
   <div class="pg-sub">แตะติ๊กเมื่อรับเงินแล้ว</div>
+  <div class="live-info" id="live-info">⚪ ยังไม่ได้เชื่อมต่อ</div>
   <div class="ttabs">
     <button class="ttab active" id="rt-all" onclick="setRT('all')">ทั้งหมด</button>
     <button class="ttab" id="rt-receive" onclick="setRT('receive')">รับเงิน</button>
     <button class="ttab" id="rt-paid" onclick="setRT('paid')">จ่ายแล้ว</button>
   </div>
-  <div id="records-list"></div>
+  <div id="records-list"><div class="loading">กำลังโหลด...</div></div>
 </div>
 
-<!-- CALC -->
 <div class="page" id="page-calc">
   <div class="pg-title">คำนวณดอกเบี้ย</div>
   <div class="pg-sub">ดอก20 &amp; ดอกกี้</div>
@@ -126,10 +138,9 @@
     <button class="ttab" id="ct-dok20" onclick="setCT('dok20')">ดอก20</button>
     <button class="ttab" id="ct-dokki" onclick="setCT('dokki')">ดอกกี้</button>
   </div>
-  <div id="calc-list"></div>
+  <div id="calc-list"><div class="loading">กำลังโหลด...</div></div>
 </div>
 
-<!-- ADD -->
 <div class="page" id="page-add">
   <div class="pg-title">เพิ่มรายการ</div>
   <div class="pg-sub">เลือกประเภท</div>
@@ -138,7 +149,6 @@
     <button class="ttab" id="at-paid" onclick="setAT('paid')">📤 จ่ายออก</button>
     <button class="ttab" id="at-calc" onclick="setAT('calc')">🧮 คิดดอก</button>
   </div>
-
   <div id="add-receive">
     <div class="fbox">
       <div class="fgrid">
@@ -150,7 +160,6 @@
       <button class="btn btn-green" onclick="addRecord('receive')">+ เพิ่มรายการรับเงิน</button>
     </div>
   </div>
-
   <div id="add-paid" style="display:none">
     <div class="fbox">
       <div class="fgrid">
@@ -162,19 +171,12 @@
       <button class="btn btn-red" onclick="addRecord('paid')">+ เพิ่มรายการจ่ายออก</button>
     </div>
   </div>
-
   <div id="add-calc" style="display:none">
-    <div class="fbar">
-      <b>ดอก20</b> · ดอก = เงินต้น × 20% ÷ 30 × วัน<br>
-      <span class="blu">ดอกกี้</span> · เหมือนกัน แต่แสดงแค่ <span class="blu">40%</span> ของดอก
-    </div>
-    <div class="fbox" id="calc-fbox">
+    <div class="fbar"><b style="color:var(--red)">ดอก20</b> · ดอก = เงินต้น × 20% ÷ 30 × วัน<br><b style="color:var(--blue)">ดอกกี้</b> · เหมือนกัน แต่แสดงแค่ 40% ของดอก</div>
+    <div class="fbox">
       <div class="fgrid">
         <div class="full"><div class="flabel">สูตร</div>
-          <select id="c-mode" onchange="onMode()">
-            <option value="dok20">ดอก20</option>
-            <option value="dokki">ดอกกี้</option>
-          </select>
+          <select id="c-mode" onchange="onMode()"><option value="dok20">ดอก20</option><option value="dokki">ดอกกี้</option></select>
         </div>
         <div class="full"><div class="flabel">ชื่อ / รายการ</div><input type="text" id="c-name" placeholder="เช่น กี้"></div>
         <div><div class="flabel">เงินต้น (฿)</div><input type="number" id="c-principal" placeholder="0" min="0"></div>
@@ -204,21 +206,20 @@ const SEED=[
   {id:110,type:'paid',name:'กี้',amount:1625,date:'2026-04-08',note:''},
   {id:111,type:'paid',name:'รุ่นน้องกี้',amount:2000,date:'2026-04-01',note:'จ่าย 1 เม.ย.',alt:'หากจ่าย 8 เม.ย. = ฿2,200'},
 ];
-
-const KR='banchee_rec', KC='banchee_calc', KCH='banchee_chk';
 const today=new Date().toISOString().split('T')[0];
-
-function load(k,def){try{const v=localStorage.getItem(k);return v?JSON.parse(v):def}catch(e){return def}}
-function save(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-
-let records=load(KR,null), calcs=load(KC,[]), checked=new Set(load(KCH,[]));
-if(!records){records=SEED;save(KR,records);}
-
-let rt='all',ct='all',at='receive';
+let GAS_URL=localStorage.getItem('gas_url')||'';
+let POLL_MS=parseInt(localStorage.getItem('poll_ms')||'3000');
+let records=[],calcs=[],checked=new Set();
+let rt='all',ct='all';
+let pollTimer=null;
+let isPolling=false;
+let lastDataHash='';
+let lastSyncTime=null;
 
 document.getElementById('r-date').value=today;
 document.getElementById('p-date').value=today;
 document.getElementById('c-start').value=today;
+document.getElementById('poll-interval').value=POLL_MS;
 
 function fmt(n){return'฿'+n.toLocaleString('th-TH',{minimumFractionDigits:2,maximumFractionDigits:2})}
 function fmtS(n){return'฿'+n.toLocaleString('th-TH')}
@@ -231,16 +232,135 @@ function thDate(s){
 function diffDays(s,e){return Math.round((new Date(e)-new Date(s))/86400000)}
 function uid(){return Date.now()+Math.floor(Math.random()*9999)}
 
+function toast(msg,type,ms=2000){
+  const b=document.getElementById('topbar');
+  b.textContent=msg;b.className='topbar show '+type;
+  if(ms>0)setTimeout(()=>b.classList.remove('show'),ms);
+}
+
+function updateLiveStatus(){
+  const dot=document.getElementById('dot-records');
+  const info=document.getElementById('live-info');
+  if(!GAS_URL){
+    dot.classList.add('off');
+    info.innerHTML='⚪ ยังไม่ได้เชื่อมต่อ Google Sheets';
+    return;
+  }
+  if(POLL_MS===0){
+    dot.classList.add('off');
+    info.innerHTML='⏸ ปิดการ sync อัตโนมัติ';
+    return;
+  }
+  dot.classList.remove('off');
+  const t=lastSyncTime?new Date(lastSyncTime).toLocaleTimeString('th-TH'):'-';
+  info.innerHTML=`<b>● Live</b> · sync ทุก ${POLL_MS/1000} วินาที · ล่าสุด ${t}`;
+}
+
+async function gasGet(tab){
+  if(!GAS_URL)return null;
+  try{const r=await fetch(`${GAS_URL}?action=get&tab=${tab}&t=${Date.now()}`);const j=await r.json();return j.ok?j.data:null;}
+  catch(e){return null}
+}
+async function gasPost(tab,data){
+  if(!GAS_URL)return false;
+  try{
+    toast('⟳ กำลังบันทึก...','sync',0);
+    await fetch(GAS_URL,{method:'POST',body:JSON.stringify({action:'save',tab,data})});
+    toast('✓ บันทึกแล้ว','ok');return true;
+  }catch(e){toast('⚠ ไม่สามารถเชื่อมต่อได้','err',4000);return false;}
+}
+
+function serR(a){return a.map(r=>[r.id,r.type,r.name,r.amount,r.date||'',r.note||'',r.badge||'',r.alt||''])}
+function parseR(rows){if(!rows||!rows.length)return[];return rows.map(r=>({id:Number(r[0]),type:r[1],name:r[2],amount:Number(r[3]),date:r[4],note:r[5],badge:r[6]||undefined,alt:r[7]||undefined})).filter(r=>r.id&&r.type)}
+function serC(a){return a.map(c=>[c.id,c.mode,c.name,c.principal,c.note||'',c.start,c.end])}
+function parseC(rows){if(!rows||!rows.length)return[];return rows.map(r=>({id:Number(r[0]),mode:r[1],name:r[2],principal:Number(r[3]),note:r[4],start:r[5],end:r[6]})).filter(c=>c.id&&c.mode)}
+function serCh(s){return[[[...s].map(String).join(',')]]}
+function parseCh(rows){if(!rows||!rows.length||!rows[0][0])return new Set();return new Set(rows[0][0].toString().split(',').filter(Boolean).map(Number))}
+
+function dataHash(){return JSON.stringify(records)+JSON.stringify(calcs)+[...checked].sort().join(',')}
+
+async function pollData(){
+  if(!GAS_URL||isPolling)return;
+  isPolling=true;
+  try{
+    const[rd,cd,chd]=await Promise.all([gasGet('records'),gasGet('calcs'),gasGet('checked')]);
+    const newRecords=rd?parseR(rd):records;
+    const newCalcs=cd?parseC(cd):calcs;
+    const newChecked=chd?parseCh(chd):checked;
+    const newHash=JSON.stringify(newRecords)+JSON.stringify(newCalcs)+[...newChecked].sort().join(',');
+    if(newHash!==lastDataHash){
+      records=newRecords;calcs=newCalcs;checked=newChecked;
+      lastDataHash=newHash;
+      renderR();renderC();
+      // visual feedback
+      document.querySelectorAll('.card').forEach(c=>c.classList.add('flash'));
+      setTimeout(()=>document.querySelectorAll('.card').forEach(c=>c.classList.remove('flash')),1000);
+    }
+    lastSyncTime=Date.now();
+    updateLiveStatus();
+  }catch(e){}
+  isPolling=false;
+}
+
+function startPolling(){
+  stopPolling();
+  if(!GAS_URL||POLL_MS===0)return;
+  pollTimer=setInterval(pollData,POLL_MS);
+}
+function stopPolling(){
+  if(pollTimer){clearInterval(pollTimer);pollTimer=null;}
+}
+
+async function loadAll(){
+  const[rd,cd,chd]=await Promise.all([gasGet('records'),gasGet('calcs'),gasGet('checked')]);
+  records=rd?parseR(rd):SEED;
+  calcs=cd?parseC(cd):[];
+  checked=chd?parseCh(chd):new Set();
+  if(!rd&&GAS_URL)await gasPost('records',serR(SEED));
+  lastDataHash=dataHash();
+  lastSyncTime=Date.now();
+  renderR();renderC();renderUrlStatus();updateLiveStatus();
+  startPolling();
+}
+
+async function saveRecords(){lastDataHash=dataHash();await gasPost('records',serR(records))}
+async function saveCalcs(){lastDataHash=dataHash();await gasPost('calcs',serC(calcs))}
+async function saveChecked(){lastDataHash=dataHash();await gasPost('checked',serCh(checked))}
+
+function renderUrlStatus(){
+  const el=document.getElementById('url-status');
+  if(GAS_URL){
+    el.innerHTML=`<div class="url-row"><div class="url-dot"></div><span>เชื่อมต่อแล้ว · <small>${GAS_URL.substring(0,50)}...</small></span></div>`;
+  }else{
+    el.innerHTML=`<div class="url-row"><div class="url-dot off"></div><span>ยังไม่ได้เชื่อมต่อ (ใช้ข้อมูล seed)</span></div>`;
+  }
+}
+
+function saveSetup(){
+  const url=document.getElementById('setup-url').value.trim();
+  if(!url){alert('กรุณาใส่ URL');return;}
+  GAS_URL=url;localStorage.setItem('gas_url',url);
+  loadAll();goPage('records');
+}
+
+function setPollInterval(){
+  POLL_MS=parseInt(document.getElementById('poll-interval').value);
+  localStorage.setItem('poll_ms',POLL_MS);
+  startPolling();
+  updateLiveStatus();
+  toast('✓ ตั้งค่าใหม่แล้ว','ok');
+}
+
 function goPage(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(x=>x.classList.remove('active'));
   document.getElementById('page-'+p).classList.add('active');
-  document.querySelectorAll('.nav-btn')[['records','calc','add'].indexOf(p)].classList.add('active');
+  const idx=['records','calc','add','setup'].indexOf(p);
+  if(idx>=0)document.querySelectorAll('.nav-btn')[idx].classList.add('active');
 }
 function setRT(t){rt=t;['all','receive','paid'].forEach(x=>document.getElementById('rt-'+x).classList.toggle('active',x===t));renderR()}
 function setCT(t){ct=t;['all','dok20','dokki'].forEach(x=>document.getElementById('ct-'+x).classList.toggle('active',x===t));renderC()}
 function setAT(t){
-  at=t;
   ['receive','paid','calc'].forEach(x=>{
     document.getElementById('at-'+x).classList.toggle('active',x===t);
     document.getElementById('add-'+x).style.display=x===t?'block':'none';
@@ -252,42 +372,19 @@ function renderR(){
   const recv=records.filter(r=>r.type==='receive');
   const paid=records.filter(r=>r.type==='paid');
   let h='';
-
   if(rt==='all'||rt==='receive'){
     h+=`<div class="sec">📥 รายการรับเงิน</div>`;
     if(!recv.length){h+=`<div class="empty">ไม่มีรายการ</div>`;}
     else{
       recv.forEach(r=>{
         const done=checked.has(r.id);
-        h+=`<div class="card receive ${done?'done':''}">
-          <div class="cbrow" onclick="toggleChk(${r.id})">
-            <div class="cb ${done?'on':''}">${done?'✓':''}</div>
-            <div style="flex:1">
-              <div class="card-row">
-                <div>
-                  <div class="card-name">${r.name}<span class="badge b-receive">รับเงิน</span></div>
-                  ${r.note?`<div class="card-sub">${r.note}</div>`:''}
-                </div>
-                <div>
-                  <div class="card-amt c-green">${fmtS(r.amount)}</div>
-                  <div class="card-date">${thDate(r.date)}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div style="text-align:right;margin-top:5px"><button class="btn-del" onclick="delR(${r.id})">✕ ลบ</button></div>
-        </div>`;
+        h+=`<div class="card receive ${done?'done':''}"><div class="cbrow" onclick="toggleChk(${r.id})"><div class="cb ${done?'on':''}">${done?'✓':''}</div><div style="flex:1"><div class="card-row"><div><div class="card-name">${r.name}<span class="badge b-receive">รับเงิน</span></div>${r.note?`<div class="card-sub">${r.note}</div>`:''}</div><div><div class="card-amt c-green">${fmtS(r.amount)}</div><div class="card-date">${thDate(r.date)}</div></div></div></div></div><div style="text-align:right;margin-top:5px"><button class="btn-del" onclick="delR(${r.id})">✕ ลบ</button></div></div>`;
       });
       const tot=recv.reduce((s,r)=>s+r.amount,0);
       const got=recv.filter(r=>checked.has(r.id)).reduce((s,r)=>s+r.amount,0);
-      h+=`<div class="sbox">
-        <div class="srow"><span class="slabel">รับแล้ว ✓</span><span class="sval" style="color:#7fff6e">${fmt(got)}</span></div>
-        <div class="srow"><span class="slabel">ยังรอรับ</span><span class="sval warn">${fmt(tot-got)}</span></div>
-        <div class="srow"><span class="slabel">รวมทั้งหมด</span><span class="sval big">${fmt(tot)}</span></div>
-      </div>`;
+      h+=`<div class="sbox"><div class="srow"><span class="slabel">รับแล้ว ✓</span><span class="sval" style="color:#7fff6e">${fmt(got)}</span></div><div class="srow"><span class="slabel">ยังรอรับ</span><span class="sval warn">${fmt(tot-got)}</span></div><div class="srow"><span class="slabel">รวมทั้งหมด</span><span class="sval big">${fmt(tot)}</span></div></div>`;
     }
   }
-
   if(rt==='all'||rt==='paid'){
     h+=`<div class="sec">📤 รายการจ่ายออก</div>`;
     if(!paid.length){h+=`<div class="empty">ไม่มีรายการ</div>`;}
@@ -295,26 +392,10 @@ function renderR(){
       paid.forEach(r=>{
         const bc=r.badge==='interest'?'b-interest':'b-paid';
         const bt=r.badge==='interest'?'ดอก':'จ่ายแล้ว';
-        h+=`<div class="card paid">
-          <div class="card-row">
-            <div>
-              <div class="card-name">${r.name}<span class="badge ${bc}">${bt}</span></div>
-              ${r.note?`<div class="card-sub">${r.note}</div>`:''}
-              ${r.alt?`<div class="alt-note">⚠ ${r.alt}</div>`:''}
-            </div>
-            <div>
-              <div class="card-amt c-muted">${fmtS(r.amount)}</div>
-              <div class="card-date">${thDate(r.date)}</div>
-            </div>
-          </div>
-          <div style="text-align:right;margin-top:5px"><button class="btn-del" onclick="delR(${r.id})">✕ ลบ</button></div>
-        </div>`;
+        h+=`<div class="card paid"><div class="card-row"><div><div class="card-name">${r.name}<span class="badge ${bc}">${bt}</span></div>${r.note?`<div class="card-sub">${r.note}</div>`:''}${r.alt?`<div class="alt-note">⚠ ${r.alt}</div>`:''}</div><div><div class="card-amt c-muted">${fmtS(r.amount)}</div><div class="card-date">${thDate(r.date)}</div></div></div><div style="text-align:right;margin-top:5px"><button class="btn-del" onclick="delR(${r.id})">✕ ลบ</button></div></div>`;
       });
       const tot=paid.reduce((s,r)=>s+r.amount,0);
-      h+=`<div class="sbox">
-        <div class="srow"><span class="slabel">จำนวนรายการ</span><span class="sval">${paid.length} รายการ</span></div>
-        <div class="srow"><span class="slabel">รวมจ่ายออก</span><span class="sval big red">${fmt(tot)}</span></div>
-      </div>`;
+      h+=`<div class="sbox"><div class="srow"><span class="slabel">จำนวนรายการ</span><span class="sval">${paid.length} รายการ</span></div><div class="srow"><span class="slabel">รวมจ่ายออก</span><span class="sval big red">${fmt(tot)}</span></div></div>`;
     }
   }
   list.innerHTML=h;
@@ -323,87 +404,31 @@ function renderR(){
 function renderC(){
   const list=document.getElementById('calc-list');
   const fil=ct==='all'?calcs:calcs.filter(c=>c.mode===ct);
-  if(!calcs.length){list.innerHTML=`<div class="empty">ยังไม่มีรายการคิดดอก<br>ไปที่ ➕ เพิ่ม แล้วเลือก คิดดอก</div>`;return;}
+  if(!calcs.length){list.innerHTML=`<div class="empty">ยังไม่มีรายการคิดดอก</div>`;return;}
   if(!fil.length){list.innerHTML=`<div class="empty">ไม่มีรายการในหมวดนี้</div>`;return;}
-
   let s20p=0,s20i=0,skp=0,ski=0;
-  calcs.forEach(c=>{
-    const days=diffDays(c.start,c.end);
-    const full=c.principal*0.20/30*days;
-    if(c.mode==='dok20'){s20p+=c.principal;s20i+=full;}
-    else{skp+=c.principal;ski+=full*0.40;}
-  });
-
+  calcs.forEach(c=>{const days=diffDays(c.start,c.end);const full=c.principal*0.20/30*days;if(c.mode==='dok20'){s20p+=c.principal;s20i+=full;}else{skp+=c.principal;ski+=full*0.40;}});
   let h='';
   fil.forEach(c=>{
-    const days=diffDays(c.start,c.end);
-    const full=c.principal*0.20/30*days;
-    const myI=c.mode==='dokki'?full*0.40:full;
-    const tot=c.principal+myI;
-    const cc=c.mode==='dok20'?'dok20':'dokki';
-    const dc=c.mode==='dok20'?'red':'blue';
-    const bc=c.mode==='dok20'?'b-dok20':'b-dokki';
-    let rh='';
-    if(c.mode==='dok20'){
-      rh=`<div class="rgrid g3">
-        <div class="rbox"><div class="rlabel">เงินต้น</div><div class="rval">${fmt(c.principal)}</div></div>
-        <div class="rbox"><div class="rlabel">ดอก</div><div class="rval c-red">${fmt(full)}</div></div>
-        <div class="rbox"><div class="rlabel">รวม</div><div class="rval c-green">${fmt(tot)}</div></div>
-      </div>`;
-    }else{
-      rh=`<div class="rgrid g4">
-        <div class="rbox"><div class="rlabel">เงินต้น</div><div class="rval">${fmt(c.principal)}</div></div>
-        <div class="rbox"><div class="rlabel">ดอกรวม</div><div class="rval c-muted">${fmt(full)}</div></div>
-        <div class="rbox"><div class="rlabel">ส่วนเรา 40%</div><div class="rval c-blue">${fmt(myI)}</div></div>
-        <div class="rbox"><div class="rlabel">รับทั้งหมด</div><div class="rval c-green">${fmt(tot)}</div></div>
-      </div>`;
-    }
-    h+=`<div class="card ${cc}">
-      <div class="card-row">
-        <div>
-          <div class="card-name">${c.name}<span class="badge ${bc}">${c.mode}</span></div>
-          ${c.note?`<div class="card-sub">${c.note}</div>`:''}
-        </div>
-        <button class="btn-del" onclick="delC(${c.id})">✕</button>
-      </div>
-      <div class="chips">
-        <span class="chip">เริ่ม ${thDate(c.start)}</span>
-        <span class="chip">ครบ ${thDate(c.end)}</span>
-        <span class="chip ${dc}">${days} วัน</span>
-      </div>
-      ${rh}
-    </div>`;
+    const days=diffDays(c.start,c.end);const full=c.principal*0.20/30*days;
+    const myI=c.mode==='dokki'?full*0.40:full;const tot=c.principal+myI;
+    const cc=c.mode==='dok20'?'dok20':'dokki';const dc=c.mode==='dok20'?'red':'blue';const bc=c.mode==='dok20'?'b-dok20':'b-dokki';
+    const rh=c.mode==='dok20'
+      ?`<div class="rgrid g3"><div class="rbox"><div class="rlabel">เงินต้น</div><div class="rval">${fmt(c.principal)}</div></div><div class="rbox"><div class="rlabel">ดอก</div><div class="rval c-red">${fmt(full)}</div></div><div class="rbox"><div class="rlabel">รวม</div><div class="rval c-green">${fmt(tot)}</div></div></div>`
+      :`<div class="rgrid g4"><div class="rbox"><div class="rlabel">เงินต้น</div><div class="rval">${fmt(c.principal)}</div></div><div class="rbox"><div class="rlabel">ดอกรวม</div><div class="rval c-muted">${fmt(full)}</div></div><div class="rbox"><div class="rlabel">ส่วนเรา 40%</div><div class="rval c-blue">${fmt(myI)}</div></div><div class="rbox"><div class="rlabel">รับทั้งหมด</div><div class="rval c-green">${fmt(tot)}</div></div></div>`;
+    h+=`<div class="card ${cc}"><div class="card-row"><div><div class="card-name">${c.name}<span class="badge ${bc}">${c.mode}</span></div>${c.note?`<div class="card-sub">${c.note}</div>`:''}</div><button class="btn-del" onclick="delC(${c.id})">✕</button></div><div class="chips"><span class="chip">เริ่ม ${thDate(c.start)}</span><span class="chip">ครบ ${thDate(c.end)}</span><span class="chip ${dc}">${days} วัน</span></div>${rh}</div>`;
   });
-
   h+=`<div class="sbox">`;
-  if(calcs.some(c=>c.mode==='dok20')){
-    h+=`<div class="srow"><span class="slabel">ดอก20 · เงินต้น</span><span class="sval">${fmt(s20p)}</span></div>
-        <div class="srow"><span class="slabel">ดอก20 · ดอกรวม</span><span class="sval warn">${fmt(s20i)}</span></div>
-        <div class="srow"><span class="slabel">ดอก20 · รับทั้งหมด</span><span class="sval big">${fmt(s20p+s20i)}</span></div>`;
-  }
-  if(calcs.some(c=>c.mode==='dokki')){
-    h+=`<div class="srow"><span class="slabel">ดอกกี้ · เงินต้น</span><span class="sval">${fmt(skp)}</span></div>
-        <div class="srow"><span class="slabel">ดอกกี้ · ส่วนเรา 40%</span><span class="sval blue">${fmt(ski)}</span></div>
-        <div class="srow"><span class="slabel">ดอกกี้ · รับทั้งหมด</span><span class="sval big">${fmt(skp+ski)}</span></div>`;
-  }
-  h+=`</div>`;
-  list.innerHTML=h;
+  if(calcs.some(c=>c.mode==='dok20')){h+=`<div class="srow"><span class="slabel">ดอก20 · เงินต้น</span><span class="sval">${fmt(s20p)}</span></div><div class="srow"><span class="slabel">ดอก20 · ดอกรวม</span><span class="sval warn">${fmt(s20i)}</span></div><div class="srow"><span class="slabel">ดอก20 · รับทั้งหมด</span><span class="sval big">${fmt(s20p+s20i)}</span></div>`;}
+  if(calcs.some(c=>c.mode==='dokki')){h+=`<div class="srow"><span class="slabel">ดอกกี้ · เงินต้น</span><span class="sval">${fmt(skp)}</span></div><div class="srow"><span class="slabel">ดอกกี้ · ส่วนเรา 40%</span><span class="sval blue">${fmt(ski)}</span></div><div class="srow"><span class="slabel">ดอกกี้ · รับทั้งหมด</span><span class="sval big">${fmt(skp+ski)}</span></div>`;}
+  h+=`</div>`;list.innerHTML=h;
 }
 
-function toggleChk(id){
-  if(checked.has(id))checked.delete(id);else checked.add(id);
-  save(KCH,[...checked]);renderR();
-}
-function delR(id){
-  if(!confirm('ลบรายการนี้?'))return;
-  records=records.filter(r=>r.id!==id);checked.delete(id);
-  save(KR,records);save(KCH,[...checked]);renderR();
-}
-function delC(id){
-  if(!confirm('ลบรายการนี้?'))return;
-  calcs=calcs.filter(c=>c.id!==id);save(KC,calcs);renderC();
-}
-function addRecord(type){
+async function toggleChk(id){if(checked.has(id))checked.delete(id);else checked.add(id);await saveChecked();renderR();}
+async function delR(id){if(!confirm('ลบรายการนี้?'))return;records=records.filter(r=>r.id!==id);checked.delete(id);await saveRecords();await saveChecked();renderR();}
+async function delC(id){if(!confirm('ลบรายการนี้?'))return;calcs=calcs.filter(c=>c.id!==id);await saveCalcs();renderC();}
+
+async function addRecord(type){
   const pre=type==='receive'?'r':'p';
   const name=document.getElementById(pre+'-name').value.trim();
   const amount=parseFloat(document.getElementById(pre+'-amount').value);
@@ -412,14 +437,12 @@ function addRecord(type){
   if(!name){alert('กรุณาใส่ชื่อ');return;}
   if(!amount||amount<=0){alert('กรุณาใส่จำนวนเงิน');return;}
   records.push({id:uid(),type,name,amount,date,note});
-  save(KR,records);
-  document.getElementById(pre+'-name').value='';
-  document.getElementById(pre+'-amount').value='';
-  document.getElementById(pre+'-date').value=today;
-  document.getElementById(pre+'-note').value='';
+  await saveRecords();
+  document.getElementById(pre+'-name').value='';document.getElementById(pre+'-amount').value='';document.getElementById(pre+'-date').value=today;document.getElementById(pre+'-note').value='';
   goPage('records');setRT(type==='receive'?'receive':'paid');renderR();
 }
-function addCalc(){
+
+async function addCalc(){
   const mode=document.getElementById('c-mode').value;
   const name=document.getElementById('c-name').value.trim();
   const principal=parseFloat(document.getElementById('c-principal').value);
@@ -431,34 +454,26 @@ function addCalc(){
   if(!start){alert('กรุณาเลือกวันเริ่มต้น');return;}
   if(!end){alert('กรุณาเลือกวันครบกำหนด');return;}
   if(end<=start){alert('วันครบกำหนดต้องหลังวันเริ่มต้น');return;}
-
-  const days=diffDays(start,end);
-  const full=principal*0.20/30*days;
-  const myI=mode==='dokki'?full*0.40:full;
-  const total=principal+myI;
-
+  const days=diffDays(start,end);const full=principal*0.20/30*days;
+  const myI=mode==='dokki'?full*0.40:full;const total=principal+myI;
   calcs.push({id:uid(),mode,name,principal,note,start,end});
-  save(KC,calcs);
-
-  records.push({id:uid(),type:'receive',name,amount:total,date:end,
-    note:(note?note+' · ':'')+(mode==='dok20'?'ดอก20':'ดอกกี้')+' · '+days+' วัน · ดอก '+fmt(myI)});
-  save(KR,records);
-
-  document.getElementById('c-name').value='';
-  document.getElementById('c-principal').value='';
-  document.getElementById('c-note').value='';
-  document.getElementById('c-start').value=today;
-  document.getElementById('c-end').value='';
-
+  await saveCalcs();
+  records.push({id:uid(),type:'receive',name,amount:total,date:end,note:(note?note+' · ':'')+(mode==='dok20'?'ดอก20':'ดอกกี้')+' · '+days+' วัน · ดอก '+fmt(myI)});
+  await saveRecords();
+  document.getElementById('c-name').value='';document.getElementById('c-principal').value='';document.getElementById('c-note').value='';document.getElementById('c-start').value=today;document.getElementById('c-end').value='';
   goPage('records');setRT('receive');renderR();renderC();
 }
-function onMode(){
-  const m=document.getElementById('c-mode').value;
-  document.getElementById('c-btn').textContent=`+ เพิ่มรายการ (${m==='dok20'?'ดอก20':'ดอกกี้'})`;
-  document.getElementById('c-btn').className=m==='dok20'?'btn btn-red':'btn btn-blue';
-}
+function onMode(){const m=document.getElementById('c-mode').value;document.getElementById('c-btn').textContent=`+ เพิ่มรายการ (${m==='dok20'?'ดอก20':'ดอกกี้'})`;document.getElementById('c-btn').className=m==='dok20'?'btn btn-red':'btn btn-blue';}
 
-renderR();renderC();
+// pause polling when tab not visible (saves quota)
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){stopPolling();}
+  else if(GAS_URL&&POLL_MS>0){pollData();startPolling();}
+});
+
+records=SEED;calcs=[];checked=new Set();
+renderR();renderC();renderUrlStatus();updateLiveStatus();
+if(GAS_URL)loadAll();
 </script>
 </body>
 </html>
